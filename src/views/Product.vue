@@ -1,5 +1,9 @@
 <template>
-  <p>about</p>
+<div>
+  <p>product</p>
+  <router-view></router-view>
+</div>
+  
 </template>
 
 <script>
