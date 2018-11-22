@@ -44,17 +44,19 @@
             <li><router-link to="/contact">联系我们</router-link></li>
           </ul>
         </div>
-        <div class="s_cart">
-          <a >
+        <div v-on:mouseenter="showCartInfo()" @mouseleave="hideCartInfo()" class="s_cart">
+          <a href="/cart">
             <span class="icon_cart"></span>购物车(<strong id="cart_sum"></strong>)<span class="icon_sj"></span>
           </a>
           <div class="cart_dropdown">
-            <h3>您的购物车为空~</h3>
+            <h3 v-if="isLogin == false">您还未登陆哟~</h3>
+            <h3 v-else-if="isCartEmpty == true">您的购物车为空~</h3>
+            <template v-else>
               <ul>
-                <li>
-                  <a href=""><img src="" alt=""/></a>
+                <li v-for="(item, index) in productInfo" :key="index">
+                  <router-link :to="'/productdetail/' + item.pid"><img :src="item.pic" alt=""/></router-link>
                   <div>
-                    <span>-</span><input type="text" value="item.count"/><span>+</span>
+                    <span>-</span><input type="text" :value="item.count"/><span>+</span>
                   </div>
                   <strong></strong>
                   <em></em>
@@ -64,6 +66,7 @@
                 <span>共计：<strong></strong></span>
                 <a href="#">结算</a>
               </div>
+            </template> 
           </div>
         </div>
       </div>
@@ -74,28 +77,57 @@
 </template>
 
 <script>
-    export default {
-        data: function(){
-          return {
-            isLogin: true,
-            uname: "",
-          }
-        },
-        methods: {
-          signout: function(){
-            sessionStorage.clear();
-            this.isLogin = false;
-          }
-        },
-        created: function(){
-          if(!sessionStorage.uid){
-            this.isLogin = false;
+  import axios from "axios";
+  import $ from "jquery";
+
+  export default {
+    data: function(){
+      return {
+        isLogin: true, // 判断是否登陆
+        uname: "", //存储用户名
+        isCartEmpty: false, //判断购物车是否为空
+        productInfo: [], //存储购物车信息
+      }
+    },
+    methods: {
+      signout: function(){ //退出按钮函数
+        sessionStorage.clear();
+        this.isLogin = false;
+      },
+      loadCart: function(uid){ //加载购物车函数
+        axios.get("http://localhost:3000/cart/select"+"?uid="+uid).then((response)=>{
+          if(response.data.product.length == 0){
+            this.isCartEmpty = true;
           }else{
-            this.isLogin = true;
+            this.productInfo = response.data.product;
+            for(var i = 0; i < response.data.product.length; i++){
+              this.productInfo[i].pic = require("../" + response.data.product[i].pic);
+            }
           }
-          this.uname = sessionStorage.uname;
-        }
+          console.log(response.data);
+          console.log(this.productInfo);
+        }).catch(function(error){
+          console.log(error);
+        })
+      },
+      showCartInfo(){ //鼠标hover时显示购物车信息
+        $(".cart_dropdown").stop().slideDown(100);
+      },
+      hideCartInfo(){ //鼠标hover时显示购物车信息
+        $(".cart_dropdown").stop().slideUp(100)
+      }
+    },
+    created: function(){
+      if(!sessionStorage.uid){
+        this.isLogin = false;
+      }else{
+        this.isLogin = true;
+        this.uname = sessionStorage.uname;
+        //调用购物车加载函数
+        this.loadCart(sessionStorage.uid);
+      }
     }
+  }
 </script>
 
 <style>

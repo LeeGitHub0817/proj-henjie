@@ -54,7 +54,6 @@
 </template>
 
 <script>
-  // import "../assets/js/jquery-1.11.3.js";
   import $ from "jquery";
   export default {
     data: function(){
