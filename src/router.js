@@ -58,7 +58,7 @@ export default new Router({
       component: News,
     },
     {
-      path:"/news/newsdetail/:nid",
+      path:"/newsdetail/:nid",
       name: "newsdetail",
       component: NewsDetail
     },

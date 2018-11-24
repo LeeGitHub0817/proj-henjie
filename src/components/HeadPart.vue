@@ -46,7 +46,7 @@
         </div>
         <div v-on:mouseenter="showCartInfo()" @mouseleave="hideCartInfo()" class="s_cart">
           <a href="/cart">
-            <span class="icon_cart"></span>购物车(<strong id="cart_sum"></strong>)<span class="icon_sj"></span>
+            <span class="icon_cart"></span>购物车(<strong v-if="isLogin == true" id="cart_sum">{{ totalCount }}</strong>)<span class="icon_sj"></span>
           </a>
           <div class="cart_dropdown">
             <h3 v-if="isLogin == false">您还未登陆哟~</h3>
@@ -58,12 +58,12 @@
                   <div>
                     <span>-</span><input type="text" :value="item.count"/><span>+</span>
                   </div>
-                  <strong></strong>
+                  <strong>{{ item.price | getDecimalTwo }}</strong>
                   <em></em>
                 </li>
               </ul>
               <div class="cd_js clearfloat" style="display: block;">
-                <span>共计：<strong></strong></span>
+                <span>共计：<strong>{{ totalPrice | getDecimalTwo }}</strong></span>
                 <a href="#">结算</a>
               </div>
             </template> 
@@ -87,6 +87,8 @@
         uname: "", //存储用户名
         isCartEmpty: false, //判断购物车是否为空
         productInfo: [], //存储购物车信息
+        totalCount: 0, //总购买数量
+        totalPrice: 0 //总价格
       }
     },
     methods: {
@@ -102,10 +104,10 @@
             this.productInfo = response.data.product;
             for(var i = 0; i < response.data.product.length; i++){
               this.productInfo[i].pic = require("../" + response.data.product[i].pic);
+              this.totalCount += response.data.product[i].count;
+              this.totalPrice += response.data.product[i].price;
             }
           }
-          console.log(response.data);
-          console.log(this.productInfo);
         }).catch(function(error){
           console.log(error);
         })
@@ -125,6 +127,15 @@
         this.uname = sessionStorage.uname;
         //调用购物车加载函数
         this.loadCart(sessionStorage.uid);
+      }
+    },
+    filters: { //自定义过滤器
+      getDecimalTwo: function(value){
+        if(!value) {
+          return "";
+        }else{
+          return value.toFixed(2);
+        }
       }
     }
   }
