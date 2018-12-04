@@ -5,45 +5,47 @@
     <div class="breadcrumb">
       <div class="container">
         <h2>
-          <a href="">首页</a>&gt;<a href="">产品中心</a>
+          <a href="">首页</a>&gt;<a href="">购物车</a>
         </h2>
       </div>
     </div>
     <!--页面主体-->
     <div class="main container">
-      <div class="cart">
+      <h1 style="text-align: center;margin-top: 50px;" v-if="isLogin == false">亲，你还未登录哟！</h1>
+      <div v-else class="cart">
         <div class="cart_header">
-          <span>已选商品<em></em>件</span>
-          <span>总金额：<strong></strong></span>
+          <span>已选商品<em>{{ totalCount }}</em>件</span>
+          <span>总金额：<strong>{{ priceSum }}</strong></span>
           <button type="button">结算</button>
         </div>
         <div class="cart_con">
           <div class="cartcon_title">
-            <span><input type="checkbox"/> 全选</span>
+            <span><input type="checkbox"/>全选</span>
             <span>商品信息</span>
             <span>单价</span>
             <span>数量</span>
             <span>金额</span>
             <span>操作</span>
           </div>
-          <ul>
+          <ul v-if="cartData != null">
             <!-- <h2>购物车中没有任何商品！</h2> -->
-            <li >
+            <li v-for="(item, index) in cartData.product" :key="index">
               <input type="checkbox" class="cart_checkbox"/>
-              <a href="" class="cart_img"><img src="item.pic" alt=""/></a>
-              <a href="" class="cart_title"></a>
-              <i></i>
+              <router-link :to="`/productdetail/${item.pid}`" class="cart_img"><img :src="require(`../${item.pic}`)" alt=""></router-link>
+              <router-link :to="`/productdetail/${item.pid}`" class="cart_title">{{ item.title1 }}</router-link>
+              <i>{{ item.price }}</i>
               <div>
-                <span>-</span><input type="text" /><span>+</span>
+                <span>-</span><input type="text" :value="item.count" /><span>+</span>
               </div>
-              <strong></strong>
-              <em></em>
+              <strong>{{ item.price }}</strong>
+              <!--删除按钮-->
+              <em></em> 
             </li>
           </ul>
         </div>
         <div class="cart_header">
-          <span>已选商品<em></em>件</span>
-          <span>总金额：<strong></strong></span>
+          <span>已选商品<em>{{ totalCount }}</em>件</span>
+          <span>总金额：<strong>{{ priceSum }}</strong></span>
           <button type="button">结算</button>
         </div>
       </div>
@@ -58,9 +60,11 @@
   export default {
     data: function(){
       return {
-        cartData: null,
-        totalCount: 0,
-        priceSum: 0
+        cartData: null, //购物车
+        totalCount: 0, //总商品数
+        priceSum: 0, //总价格
+        isLogin: false,
+        isBuy: false
       }
     },
     methods: {
@@ -68,13 +72,23 @@
         if(sessionStorage.uid){
           axios.get("http://localhost:3000/cart/select" + "?uid=" + sessionStorage.uid).then((response)=>{
             console.log(response.data);
+            this.cartData = response.data;
+            for(var i = 0; i < response.data.product.length; i++){
+              this.totalCount += response.data.product[i].count;
+              this.priceSum += response.data.product[i].count * response.data.product[i].price;
+            }
           }).catch((error)=>{
-
+            console.log(error);
           });
         }
       }
     },
     created: function(){
+      if(!sessionStorage.uid){
+        this.isLogin = false;
+      }else{
+        this.isLogin = true;
+      }
       this.loadCart();
     }
   }
