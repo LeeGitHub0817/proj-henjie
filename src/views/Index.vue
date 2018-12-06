@@ -7,10 +7,10 @@
       <!-- 练习：编写banner的html和css-->
       <!-- 图片列表-->
       <ul>
-        <li v-bind:style="{background: 'url(' + require('../assets/images/banner_01.jpg') +') center 0 no-repeat', display: 'block',zIndex: 20}"><a @:click.prevent href="#" class="link"></a></li>
-        <li v-bind:style="{background: 'url(' + require('../assets/images/banner_02.jpg') +') center 0 no-repeat'}"><a @:click.prevent href="#" class="link"></a></li>
-        <li :style="{background: 'url(' + require('../assets/images/banner_03.jpg') +') center 0 no-repeat'}"><a @:click.prevent href="#" class="link"></a></li>
-        <li :style="{background: 'url(' + require('../assets/images/banner_04.jpg') +') center 0 no-repeat'}"><a @:click.prevent href="#" class="link"></a></li>
+        <li v-bind:style="{background: 'url(' + require('../assets/images/banner_01.jpg') +') center 0 no-repeat', display: 'block',zIndex: 20}"><a @click.prevent href="#" class="link"></a></li>
+        <li v-bind:style="{background: 'url(' + require('../assets/images/banner_02.jpg') +') center 0 no-repeat'}"><a @click.prevent href="#" class="link"></a></li>
+        <li :style="{background: 'url(' + require('../assets/images/banner_03.jpg') +') center 0 no-repeat'}"><a @click.prevent href="#" class="link"></a></li>
+        <li :style="{background: 'url(' + require('../assets/images/banner_04.jpg') +') center 0 no-repeat'}"><a @click.prevent href="#" class="link"></a></li>
       </ul>
       <!-- 左右箭头-->
       <span class="cut prev" @click="prevImg()"></span>
