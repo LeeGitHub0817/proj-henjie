@@ -39,7 +39,7 @@
               </div>
               <strong>{{ item.price }}</strong>
               <!--删除按钮-->
-              <em></em> 
+              <em @click="deleteProduct(item.did)"></em> 
             </li>
           </ul>
         </div>
@@ -81,6 +81,17 @@
             console.log(error);
           });
         }
+      },
+      deleteProduct: function(did){
+        if(confirm("确定删除以下商品吗？")){
+          axios.get("http://localhost:3000/cart/delete" + "?did=" + did).then((response)=>{
+            console.log(response.data);
+            this.loadCart();
+          }).catch((error)=>{
+            console.log(error);
+          })
+        }
+        
       }
     },
     created: function(){
