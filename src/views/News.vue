@@ -39,7 +39,7 @@
     },
     methods: {
       loadNewsList: function(pageNum=1){ //加载新闻
-        axios.get("http://localhost:3000/news/list"+"?pageNum="+pageNum).then((response)=>{
+        axios.get("http://45.32.162.42:3000/news/list"+"?pageNum="+pageNum).then((response)=>{
           this.newsInfo = response.data;
         }).catch((error)=>{
           console.log(error);

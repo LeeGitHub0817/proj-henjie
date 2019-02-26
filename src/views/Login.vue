@@ -62,7 +62,7 @@
       },
       doLogin: function(){
         if(this.uaccount.length !== 0 && this.upwd.length !== 0){
-          axios.post("http://localhost:3000/user/login", {uaccount: this.uaccount, upwd: this.upwd}).
+          axios.post("http://45.32.162.42:3000/user/login", {uaccount: this.uaccount, upwd: this.upwd}).
           then(function(response){
             if(response.data.code == 1){
               sessionStorage.uid = response.data.uid;

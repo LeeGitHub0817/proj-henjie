@@ -54,7 +54,7 @@
     },
     methods: {
       loadDetail: function(){
-        axios.get("http://localhost:3000/productdetail/detail" + "?pid=" + this.$route.params.pid).then((response)=>{
+        axios.get("http://45.32.162.42:3000/productdetail/detail" + "?pid=" + this.$route.params.pid).then((response)=>{
           this.productDetailData = response.data[0];
           console.log(response.data);
         }).catch((error)=>{
@@ -63,7 +63,7 @@
       },
       addCart: function(){
         if(sessionStorage.uid){
-          axios.get("http://localhost:3000/cart/add" + "?uid=" + sessionStorage.uid + "&pid=" + this.$route.params.pid).then((response)=>{
+          axios.get("http://45.32.162.42:3000/cart/add" + "?uid=" + sessionStorage.uid + "&pid=" + this.$route.params.pid).then((response)=>{
             console.log(response.data);
             if(response.data.stat == 1){
               alert("加入购物车成功！");

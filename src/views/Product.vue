@@ -52,7 +52,7 @@
     },
     methods: {
       loadProductList: function(type, pageNum=1){
-        axios.get("http://localhost:3000/product" + "?type=" + type + "&pageNum=" + pageNum).then((response)=>{
+        axios.get("http://45.32.162.42:3000/product" + "?type=" + type + "&pageNum=" + pageNum).then((response)=>{
           this.productData = response.data;
           console.log(response.data);
         }).catch((error)=>{

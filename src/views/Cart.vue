@@ -70,7 +70,7 @@
     methods: {
       loadCart: function(){
         if(sessionStorage.uid){
-          axios.get("http://localhost:3000/cart/select" + "?uid=" + sessionStorage.uid).then((response)=>{
+          axios.get("http://45.32.162.42:3000/cart/select" + "?uid=" + sessionStorage.uid).then((response)=>{
             console.log(response.data);
             this.cartData = response.data;
             for(var i = 0; i < response.data.product.length; i++){
@@ -84,7 +84,7 @@
       },
       deleteProduct: function(did){
         if(confirm("确定删除以下商品吗？")){
-          axios.get("http://localhost:3000/cart/delete" + "?did=" + did).then((response)=>{
+          axios.get("http://45.32.162.42:3000/cart/delete" + "?did=" + did).then((response)=>{
             console.log(response.data);
             this.loadCart();
           }).catch((error)=>{

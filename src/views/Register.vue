@@ -69,7 +69,7 @@
         var c_upwd_repeat = this.checkRepeatPwd();
         var c_phone = this.checkPhone();
         if(c_email && c_upwd && c_upwd_repeat && c_phone && this.isAgreed){
-          axios.post("http://localhost:3000/user/register", {
+          axios.post("http://45.32.162.42:3000/user/register", {
             uname: this.uname,
             upwd: this.upwd,
             phone: this.phone
@@ -111,7 +111,7 @@
         var back=false;
         $.ajax({
             type:"post",
-            url:"http://localhost:3000/user/uname",
+            url:"http://45.32.162.42:3000/user/uname",
             data:{uname:uname},
             async:false,
             dataType: "json",
@@ -181,7 +181,7 @@
         var back=false;
         $.ajax({
             type:"post",
-            url:"http://localhost:3000/user/phone",
+            url:"http://45.32.162.42:3000/user/phone",
             data:{phone:phone},
             async:false,
             dataType: "json",

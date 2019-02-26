@@ -36,7 +36,7 @@
     },
     methods: {
       loadNewsDetail: function(nid){
-        axios.get("http://localhost:3000/news/detail" + "?nid=" + nid).then((response)=>{
+        axios.get("http://45.32.162.42:3000/news/detail" + "?nid=" + nid).then((response)=>{
           this.newsDetailData = response.data;
           console.log(response.data);
         }).catch((error)=>{
