@@ -45,9 +45,9 @@
           </ul>
         </div>
         <div v-on:mouseenter="showCartInfo()" @mouseleave="hideCartInfo()" class="s_cart">
-          <a href="/cart">
+          <router-link href="/cart">
             <span class="icon_cart"></span>购物车(<strong v-if="isLogin == true" id="cart_sum">{{ totalCount }}</strong>)<span class="icon_sj"></span>
-          </a>
+          </router-link>
           <div class="cart_dropdown">
             <h3 v-if="isLogin == false">您还未登陆哟~</h3>
             <h3 v-else-if="isCartEmpty == true">您的购物车为空~</h3>
