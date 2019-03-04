@@ -45,7 +45,7 @@
           </ul>
         </div>
         <div v-on:mouseenter="showCartInfo()" @mouseleave="hideCartInfo()" class="s_cart">
-          <router-link href="/cart">
+          <router-link to="/cart">
             <span class="icon_cart"></span>购物车(<strong v-if="isLogin == true" id="cart_sum">{{ totalCount }}</strong>)<span class="icon_sj"></span>
           </router-link>
           <div class="cart_dropdown">
